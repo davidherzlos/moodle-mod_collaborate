@@ -27,7 +27,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_widget';
-$plugin->version = 2018091600;
+$plugin->version = 2018091601;
 $plugin->release = 'v1.0'; // Basic activity plugin template.
 $plugin->requires = 2017111301; // Moodle 3.4, 3.5.
 $plugin->maturity = MATURITY_BETA;

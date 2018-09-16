@@ -45,3 +45,8 @@ $string['pluginname'] = 'widget';
 
 // Mod form specific widget settings.
 $string['title'] = 'Activity Title: ';
+
+// JS modal strings
+$string['modal_title'] = 'Modal title';
+$string['modal_body'] = 'Some text for the body';
+$string['return_course'] = 'Back to course';

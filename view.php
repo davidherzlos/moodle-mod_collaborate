@@ -28,11 +28,14 @@
 
 require_once('../../config.php');
 require_once(dirname(__FILE__).'/lib.php');
+
 // We need the course module id (id) or
 // the widget instance id (n).
 $id = optional_param('id', 0, PARAM_INT);
 $n  = optional_param('n', 0, PARAM_INT);
 
+// Determine page action (redirect or not).
+$action = optional_param('action', 'view', PARAM_ALPHA);
 if ($id) {
     $cm = get_coursemodule_from_id('widget', $id, 0, false,
             MUST_EXIST);
@@ -76,8 +79,25 @@ $renderer = $PAGE->get_renderer('mod_widget');
 if (!$widget->intro) {
     $widget->intro = '';
 }
-// Start the page, call renderer to show content and
-// finish the page.
+
+if ($action == 'course') {
+    redirect($PAGE->course, 'Back to course', 2);
+}
+// Start the page, call renderer to show content.
 echo $OUTPUT->header();
 echo $renderer->fetch_view_page_content($widget, $cm);
+
+// Sample JS modal. Return to course button.
+$PAGE->requires->js_call_amd('mod_widget/simple_modal',
+        'confirm', ['modalform']);
+$action_url = new moodle_url('view.php', ['n' => $widget->id,
+        'action' => 'course']);
+
+echo "<form method=\"post\" action=$action_url id=\"modalform\">";
+echo '<br />';
+echo '<input type="submit" class="btn btn-primary"
+        value="'.get_string("return_course", "mod_widget") .
+        '" />';
+echo "</form>";
+
 echo $OUTPUT->footer();
