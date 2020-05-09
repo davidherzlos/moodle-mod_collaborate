@@ -18,7 +18,7 @@
  * Simple debugging class
  *
  * @package    mod_collaborate
- * @copyright  2019 Richard Jones richardnz@outlook.com
+ * @copyright  2020 David OC davidherzlos@gmail.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -27,21 +27,23 @@ namespace mod_collaborate\local;
 defined('MOODLE_INTERNAL') || die();
 
 class debugger {
-    public static function log($value, $message){
-        // writes a file
-        // writes to navigator
-        // consider stack traces
-    }
 
-    public static function logit($message, $value) {
+    public static function log($message, $value, $traceback) {
 
-        $file = fopen('mylog.log', 'a');
+        $file = fopen(dirname(dirname(__DIR__)) . '/debugging.log', 'a');
 
         if ($file) {
-            fwrite($file, print_object($message));
-            fwrite($file, print_object($value));
+            fwrite($file, print_r($message . ': ', true));
+            fwrite($file, "\n");
+            fwrite($file, print_r($value, true));
+            fwrite($file, "\n");
+            fwrite($file, "\n");
             fwrite($file, "\n");
             fclose($file);
+            if ($traceback) {
+                $exception = new \Exception();
+                self::log('Traceback:', $exception->getTraceAsString(), false);
+            }
         }
     }
 }

@@ -27,6 +27,8 @@
 require_once('../../config.php');
 require_once(dirname(__FILE__).'/lib.php');
 
+use mod_collaborate\local\debugger;
+
 // We need the course module id (id) or
 // the collaborate instance id (n).
 $id = optional_param('id', 0, PARAM_INT);
@@ -63,5 +65,6 @@ $renderer = $PAGE->get_renderer('mod_collaborate');
 if (!$collaborate->intro) {
     $collaborate->intro = '';
 }
+
 // Call the renderer method to display the collaborate intro content.
 $renderer->render_view_page_content($collaborate, $cm);

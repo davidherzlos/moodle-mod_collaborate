@@ -23,7 +23,8 @@
  * @see https://github.com/moodlehq/moodle-mod_collaborate
  * @see https://github.com/justinhunt/moodle-mod_collaborate
  */
-use \mod_collaborate\local\debugging;
+use \mod_collaborate\local\debugger;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -41,7 +42,6 @@ class mod_collaborate_renderer extends plugin_renderer_base {
     public function render_view_page_content($collaborate, $cm) {
 
         $data = new stdClass();
-
         $data->heading = $collaborate->title;
         // Moodle handles processing of std intro field.
         $data->body = format_module_intro('collaborate',
