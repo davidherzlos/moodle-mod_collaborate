@@ -26,14 +26,20 @@ namespace mod_collaborate\local;
 
 defined('MOODLE_INTERNAL') || die();
 
-class debugging {
+class debugger {
+    public static function log($value, $message){
+        // writes a file
+        // writes to navigator
+        // consider stack traces
+    }
+
     public static function logit($message, $value) {
 
         $file = fopen('mylog.log', 'a');
 
         if ($file) {
-            fwrite($file, print_r($message, true));
-            fwrite($file, print_r($value, true));
+            fwrite($file, print_object($message));
+            fwrite($file, print_object($value));
             fwrite($file, "\n");
             fclose($file);
         }
