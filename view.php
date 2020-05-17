@@ -27,8 +27,6 @@
 require_once('../../config.php');
 require_once(dirname(__FILE__).'/lib.php');
 
-use mod_collaborate\local\debugger;
-
 // We need the course module id (id) or
 // the collaborate instance id (n).
 $id = optional_param('id', 0, PARAM_INT);
