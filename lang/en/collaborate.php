@@ -37,11 +37,12 @@ $string['collaborate:addinstance'] = 'Add a new collaborate';
 $string['collaborate:submit'] = 'Submit collaborate';
 $string['collaborate:view'] = 'View collaborate';
 $string['collaboratefieldset'] = 'Custom example fieldset';
-$string['collaboratename'] = 'collaborate name';
-$string['collaboratename_help'] = 'This is the content of the help tooltip associated with the collaboratename field. Markdown syntax is supported.';
+$string['collaboratename'] = 'Collaborate name';
+$string['collaboratename_help'] = '### Your activity needs a name';
 $string['collaborate'] = 'collaborate';
 $string['pluginadministration'] = 'collaborate administration';
 $string['pluginname'] = 'collaborate';
 
 // Mod form specific collaborate settings.
-$string['title'] = 'Activity Title: ';
+$string['collaboratetitle'] = 'Activity Title: ';
+$string['collaboratetitle_help'] = '### Please select a suitable title for your colaborate main page';

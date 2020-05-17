@@ -70,8 +70,9 @@ class mod_collaborate_mod_form extends moodleform_mod {
 
         // Add a specific mod_collaborate field - title.
         $mform->addElement('text', 'title',
-                get_string('title', 'mod_collaborate'));
+                get_string('collaboratetitle', 'mod_collaborate'));
         $mform->setType('title', PARAM_TEXT);
+        $mform->addHelpButton('title', 'collaboratetitle', 'collaborate');
 
         // Add standard grading elements.
         $this->standard_grading_coursemodule_elements();
