@@ -28,22 +28,35 @@ defined('MOODLE_INTERNAL') || die();
 
 class debugger {
 
-    public static function log($message, $value, $traceback) {
+    public static function log($message, $value, $backtrace = false) {
+        global $CFG;
+        $file = fopen($CFG->dirroot.'/mod/collaborate/debugging.log', 'a');
 
-        $file = fopen(dirname(dirname(__DIR__)) . '/debugging.log', 'a');
+        if ($backtrace) {
+            $exception = new \Exception();
+            $trace = explode("\n", $exception->getTraceAsString());
+            $trace = array_reverse($trace);
+            array_shift($trace); // remove {main}
+            array_pop($trace); // remove call to this method
+            $length = count($trace);
+
+            $result = array();
+            for ($i = 0; $i < $length; $i++) {
+                $result[] = ($i + 1)  . ')' . substr($trace[$i], strpos($trace[$i], ' ')); // replace '#someNum' with '$i)', set the right ordering
+                }
+            $backtrace = implode("\n", $result);
+            }
 
         if ($file) {
             fwrite($file, print_r($message . ': ', true));
             fwrite($file, "\n");
+            fwrite($file, "\n");
             fwrite($file, print_r($value, true));
             fwrite($file, "\n");
-            fwrite($file, "\n");
+            fwrite($file, print_r($backtrace ? $backtrace . "\n \n" : "\r", true));
+            fwrite($file, "------------------------------------------------");
             fwrite($file, "\n");
             fclose($file);
-            if ($traceback) {
-                $exception = new \Exception();
-                self::log('Traceback:', $exception->getTraceAsString(), false);
-            }
         }
     }
 }
