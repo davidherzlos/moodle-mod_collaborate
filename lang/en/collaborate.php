@@ -50,3 +50,7 @@ $string['collaboratetitle_help'] = '### Please select a suitable title for your 
 // For event
 $string['pageviewed'] = 'Course module viewed';
 
+// Mod form specific collaborate settings.
+$string['title'] = 'Activity Title: ';
+$string['texteditor'] = 'Instructions {$a}';
+
