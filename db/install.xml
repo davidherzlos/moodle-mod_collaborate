@@ -15,9 +15,11 @@
         <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)"/>
         <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"
                COMMENT="The display title of the Collaborate instance"/>
-        <FIELD NAME="instructionsa" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Editor field for partner A instructions"/>
+        <FIELD NAME="instructionsa" TYPE="text" NOTNULL="true" SEQUENCE="false"
+               COMMENT="Editor field for partner A instructions"/>
         <FIELD NAME="instructionsaformat" TYPE="int" LENGTH="4" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the instructions field (MOODLE, HTML, MARKDOWN...)"/>
-        <FIELD NAME="instructionsb" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Editor field for partner B instructions"/>
+        <FIELD NAME="instructionsb" TYPE="text" NOTNULL="true" SEQUENCE="false"
+               COMMENT="Editor field for partner B instructions"/>
         <FIELD NAME="instructionsbformat" TYPE="int" LENGTH="4" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the instructions field (MOODLE, HTML, MARKDOWN...)"/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false"/>
