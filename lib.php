@@ -30,6 +30,8 @@
  * @see https://github.com/moodlehq/moodle-mod_collaborate
  * @see https://github.com/justinhunt/moodle-mod_collaborate */
 
+use mod_collaborate\local\collaborate_editor;
+
 defined('MOODLE_INTERNAL') || die();
 
 /* Moodle core API */
@@ -75,8 +77,30 @@ function collaborate_supports($feature) {
 function collaborate_add_instance(stdClass $collaborate, mod_collaborate_mod_form $mform = null) {
     global $DB;
 
+    // Dummy values to store our editor fields
+    $collaborate->instructionsa = 'Default instructions for partner a';
+    $collaborate->instructionsaformat = FORMAT_HTML;
+    $collaborate->instructionsb = 'Default instructions for partner b';
+    $collaborate->instructionsbformat = FORMAT_HTML;
+
     $collaborate->timecreated = time();
     $collaborate->id = $DB->insert_record('collaborate', $collaborate);
+
+    // Call std Moodle file_postupdate_standard_editor to save files,
+    // and prepare editor content for saving in database.
+    $cmid = $collaborate->coursemodule;
+    $context = context_module::instance($cmid);
+    $options = collaborate_editor::get_editor_options($context);
+    $names = collaborate_editor::get_editor_names();
+
+    foreach ($names as $name) {
+        $collaborate =  file_postupdate_standard_editor($collaborate, $name, $options,
+                $context, 'mod_collaborate', $name, $collaborate->id);
+    }
+
+    // OK editor data processed into two fields for database, update record.
+    // Update the database.
+    $DB->update_record('collaborate', $collaborate);
 
     return $collaborate->id;
 }
@@ -98,9 +122,19 @@ function collaborate_update_instance(stdClass $collaborate, mod_collaborate_mod_
     $collaborate->timemodified = time();
     $collaborate->id = $collaborate->instance;
 
-    $result = $DB->update_record('collaborate', $collaborate);
+    // Save files and process editor content.
+    $cmid = $collaborate->coursemodule;
+    $context = context_module::instance($cmid);
+    $options = collaborate_editor::get_editor_options($context);
+    $names = collaborate_editor::get_editor_names();
 
-    return $result;
+    foreach ($names as $name) {
+        $collaborate =  file_postupdate_standard_editor($collaborate, $name, $options,
+                $context, 'mod_collaborate', $name, $collaborate->id);
+    }
+
+    // Update the database
+    return $DB->update_record('collaborate', $collaborate);
 }
 
 /**
@@ -265,6 +299,7 @@ function collaborate_get_extra_capabilities() {
 }
 
 /* Gradebook API */
+
 /**
  * Is a given scale used by the instance of collaborate?
  *
@@ -283,6 +318,7 @@ function collaborate_scale_used($collaborateid, $scaleid) {
         return false;
     }
 }
+
 /**
  * Checks if scale is being used by any instance of collaborate.
  *
@@ -299,6 +335,7 @@ function collaborate_scale_used_anywhere($scaleid) {
         return false;
     }
 }
+
 /**
  * Creates or updates grade item for the given collaborate instance
  *
@@ -330,6 +367,7 @@ function collaborate_grade_item_update(stdClass $collaborate, $reset=false) {
     grade_update('mod/collaborate', $collaborate->course, 'mod', 'collaborate',
             $collaborate->id, 0, null, $item);
 }
+
 /**
  * Delete grade item for given collaborate instance
  *
@@ -342,6 +380,7 @@ function collaborate_grade_item_delete($collaborate) {
     return grade_update('mod/collaborate', $collaborate->course, 'mod', 'collaborate',
             $collaborate->id, 0, null, array('deleted' => 1));
 }
+
 /**
  * Update collaborate grades in the gradebook
  *
@@ -372,7 +411,8 @@ function collaborate_update_grades(stdClass $collaborate, $userid = 0) {
  * @return array of [(string)filearea] => (string)description
  */
 function collaborate_get_file_areas($course, $cm, $context) {
-    return array();
+    return ['instructionsa' => 'Instructions for partner A',
+            'instructionsb' => 'Instructions for partner B'];
 }
 
 /**
