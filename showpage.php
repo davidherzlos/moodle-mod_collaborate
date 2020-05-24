@@ -62,4 +62,4 @@ $event->trigger();
 $renderer = $PAGE->get_renderer('mod_collaborate');
 
 // Call the renderer method to display the collaborate intro content.
-$renderer->render_view_page_content($collaborate, $cm);
+$renderer->render_page_content($collaborate, $cm, $page);

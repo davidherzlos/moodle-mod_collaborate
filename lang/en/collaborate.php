@@ -58,3 +58,8 @@ $string['texteditor'] = 'Instructions {$a}';
 $string['studenta'] = 'Partner A';
 $string['studentb'] = 'Partner B';
 
+
+$string['returnview'] = 'Return';
+
+
+
