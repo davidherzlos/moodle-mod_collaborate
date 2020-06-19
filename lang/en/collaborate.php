@@ -33,9 +33,13 @@ defined('MOODLE_INTERNAL') || die();
 $string['modulename'] = 'collaborate';
 $string['modulenameplural'] = 'collaborates';
 $string['modulename_help'] = 'Use the collaborate module for... | The collaborate module allows...';
+
+// Permissions
 $string['collaborate:addinstance'] = 'Add a new collaborate';
 $string['collaborate:submit'] = 'Submit collaborate';
 $string['collaborate:view'] = 'View collaborate';
+$string['collaborate:viewreportstab'] = 'View the collaborate teacher report';
+
 $string['collaboratefieldset'] = 'Custom example fieldset';
 $string['collaboratename'] = 'Collaborate name';
 $string['collaboratename_help'] = '### Your activity needs a name';
@@ -57,9 +61,16 @@ $string['texteditor'] = 'Instructions {$a}';
 // User button labels.
 $string['studenta'] = 'Partner A';
 $string['studentb'] = 'Partner B';
+$string['viewtab'] = 'View';
+$string['reportstab'] = 'Reports';
+
 
 
 $string['returnview'] = 'Return';
 
+// Settings
 
-
+$string['collaboratesettings'] = 'Collaborate settings';
+$string['enablereports'] = 'Activity report for teachers';
+$string['enablereports_desc'] = 'Allow the teachers to view the activity report';
+$string['componentname'] = 'mod_collaborate';
