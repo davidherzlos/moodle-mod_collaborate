@@ -49,7 +49,8 @@ if ($id) {
 }
 
 // Print the page header.
-$PAGE->set_url('/mod/collaborate/view.php', array('id' => $cm->id));
+$pageurl = new moodle_url('/mod/collaborate/view.php', array('id' => $cm->id));
+$PAGE->set_url($pageurl);
 
 require_login($course, true, $cm);
 
