@@ -12,20 +12,22 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>;.
 /**
- * Prints a user page
+ * Prints a user page.
  *
  * @package    mod_collaborate
  * @copyright  2019 Richard Jones richardnz@outlook.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @see https://github.com/moodlehq/moodle-mod_collaborate
- * @see https://github.com/justinhunt/moodle-mod_collaborate */
-
+ * @see https://github.com/justinhunt/moodle-mod_collaborate
+ */
+use \core\output\notification;
+use \mod_collaborate\local\submissions;
+use \mod_collaborate\local\submission_form;
+use \mod_collaborate\local\collaborate_editor;
 
 require_once('../../config.php');
-require_once(dirname(__FILE__).'/lib.php');
 
 // The user page id and the collaborate instance id.
 $page = required_param('page', PARAM_TEXT);
@@ -48,18 +50,27 @@ require_login($course, true, $cm);
 $PAGE->set_title(format_string($collaborate->name));
 $PAGE->set_heading(format_string($course->fullname));
 
-// Completion tracking
-// Let's consider the activity "viewed" at this point.
-$completion = new completion_info($course);
-$completion->set_module_viewed($cm);
+// Instantiate the for and set the return url.
+$form = new submission_form(null, ['context' => $context, 'cid' => $cid, 'page' => $page]);
+$returnurl = new moodle_url('/mod/collaborate/showpage.php', ['cid' => $cid, 'page' => $page]);
 
-// Events
-// Let's add the module viewed event. This may be seen in the standard log
-$event = \mod_collaborate\event\page_viewed::create(['context' => $PAGE->context]);
-$event->trigger();
+// Do we have any data - save it and notify the user.
+if ($data = $form->get_data()) {
+    // Save the data here.
+    submissions::save_submission($data, $context, $cid, $page);
+    redirect ($returnurl, get_string('submissionupdated', 'mod_collaborate'), notification::NOTIFY_SUCCESS);
+}
+
+// Set the saved data (if any) to the form.
+$data = new stdClass();
+$data = submissions::get_submission($cid, $USER->id, $page);
+if ($data) {
+    $options = collaborate_editor::get_editor_options($context);
+    $data = file_prepare_standard_editor($data, 'submission', $options, $context, 'mod_collaborate', 'submission',
+            $data->id);
+    $form->set_data($data);
+}
 
 // The renderer performs output to the page.
 $renderer = $PAGE->get_renderer('mod_collaborate');
-
-// Call the renderer method to display the collaborate intro content.
-$renderer->render_page_content($collaborate, $cm, $page);
+$renderer->render_page_content($collaborate, $cm, $page, $form);

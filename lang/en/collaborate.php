@@ -64,8 +64,6 @@ $string['studentb'] = 'Partner B';
 $string['viewtab'] = 'View';
 $string['reportstab'] = 'Reports';
 
-
-
 $string['returnview'] = 'Return';
 
 // Settings
@@ -74,3 +72,8 @@ $string['collaboratesettings'] = 'Collaborate settings';
 $string['enablereports'] = 'Activity report for teachers';
 $string['enablereports_desc'] = 'Allow the teachers to view the activity report';
 $string['componentname'] = 'mod_collaborate';
+
+// Submissions form.
+$string['submission'] = 'Your submission';
+$string['submissionsave'] = 'Save submission';
+$string['submissionupdated'] = 'Submission updated';
