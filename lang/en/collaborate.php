@@ -39,6 +39,7 @@ $string['collaborate:addinstance'] = 'Add a new collaborate';
 $string['collaborate:submit'] = 'Submit collaborate';
 $string['collaborate:view'] = 'View collaborate';
 $string['collaborate:viewreportstab'] = 'View the collaborate teacher report';
+$string['collaborate:gradesubmission'] = 'View the collaborate teacher report';
 
 $string['collaboratefieldset'] = 'Custom example fieldset';
 $string['collaboratename'] = 'Collaborate name';
@@ -77,3 +78,20 @@ $string['componentname'] = 'mod_collaborate';
 $string['submission'] = 'Your submission';
 $string['submissionsave'] = 'Save submission';
 $string['submissionupdated'] = 'Submission updated';
+
+// Strings for usubmission report.
+$string['submissions'] = 'List of submissions';
+$string['id'] = 'ID';
+$string['title'] = 'Title';
+$string['submission'] = 'Submission text (part)';
+$string['firstname'] = 'First name';
+$string['lastname'] = 'Last name';
+$string['grade'] = 'Grade';
+
+// Grading form.
+$string['grade'] = 'Grade';
+$string['allocate_grade'] = 'Allocate a grade';
+$string['gradingheader'] = 'Grade a submission';
+$string['currentgrade'] = 'Current grade: ';
+$string['user'] = 'User: ';
+$string['grade_saved'] = 'Grade saved';

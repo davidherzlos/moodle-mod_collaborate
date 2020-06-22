@@ -110,4 +110,57 @@ class mod_collaborate_renderer extends plugin_renderer_base {
         echo $this->render_from_template('mod_collaborate/show', $data);
         echo $this->output->footer();
     }
+
+    /**
+     * Displays the reports page (reports.php).
+     *
+     * @param object $collaborate the collaborate instance std Object
+     * @param object $cm the course module std Object
+     * @param array $submissions 2D array of submission records
+     * @param headers $headers the strings for the column headers
+     * @return none
+     */
+    public function render_reports_page_content($collaborate, $cm, $submissions, $headers) {
+
+        $data = new stdClass();
+
+        $data->heading = get_string('submissions', 'mod_collaborate');
+        $data->headers = $headers;
+        $data->submissions = $submissions;
+
+        // The tabs.
+        $r = new \moodle_url('/mod/collaborate/reports.php', ['cid' => $collaborate->id]);
+        $v = new \moodle_url('/mod/collaborate/view.php', ['id' => $cm->id]);
+        $data->url_reports = $r->out(false);
+        $data->url_view = $v->out(false);
+
+        // Display the page content.
+        echo $this->output->header();
+        echo $this->render_from_template('mod_collaborate/reports', $data);
+        echo $this->output->footer();
+    }
+
+    public function render_submission_to_grade($submission, $context, $cid, $sid) {
+
+        $data = new stdClass();
+        $data->pageheader =  get_string('gradingheader', 'mod_collaborate');
+        $data->title = $submission->title;
+        $data->firstname = $submission->firstname;
+        $data->lastname = $submission->lastname;
+        $data->grade = $submission->grade;
+        // Submission.
+        $content = file_rewrite_pluginfile_urls($submission->submission, 'pluginfile.php', $context->id,
+                'mod_collaborate', 'submission', $sid);
+
+        // Format submission.
+        $formatoptions = new stdClass;
+        $formatoptions->noclean = true;
+        $formatoptions->overflowdiv = true;
+        $formatoptions->context = $context;
+        $format = $submission->submission;
+        $data->submission = format_text($content, $format, $formatoptions);
+
+        return $this->render_from_template('mod_collaborate/submissiontograde', $data);
+
+    }
 }
